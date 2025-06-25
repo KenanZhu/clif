@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
     CLIF::FApplication app("科学计算工具");
 
     /// 注册容器类型
-    app.addNewContainerConverter<vector<vector<int>>>();
+    app.registerContainerConverter<vector<vector<int>>>();
 
     /// 链接子命令和功能函数及带验证器的命令参数
     app.addSubCommand("matrix", "处理二维矩阵",

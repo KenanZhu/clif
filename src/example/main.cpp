@@ -7,7 +7,7 @@
     [INTRODUCTION]
 
         This is a functional CLI-Framework based on C/C++, which have features below:
-            a,  ingle File Dependency 
+            a,  ingle File Dependency
              :  Requires only the C++17 standard library with no external dependencies.
             b.  Functional Programming
              :  Direct function binding eliminates manual argument parsing.
@@ -42,12 +42,12 @@
 
         6.  Register user data type:
 
-                app.registerNewBasic<MyDataType>
+                app.registerBasicTypeConverter<MyDataType>
                 ([](const std::string &str){ ... } -> std::any);
 
         7.  Register container types (if needed):
 
-                app.registerNewContainer<vector<vector<int>>>();
+                app.registerContainerConverter<vector<vector<int>>>();
 
         8.  Start parsing:
 
@@ -57,7 +57,7 @@
 
         1.  Requires C++17 or higher : Framework heavily uses structured
                                        bindings and std::any.
-        2.  Container limits         : Pre-register nested containers 
+        2.  Container limits         : Pre-register nested containers
                                        using registerNewContainer<>().
         3.  Type safety              : Ensure function signatures exactly
                                        match option definitions.

@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
     CLIF::FApplication app("Scientific Computing Tool");
 
     /// Register container type
-    app.addNewContainerConverter<vector<vector<int>>>();
+    app.registerContainerConverter<vector<vector<int>>>();
 
     /// Bind subcommand with validated parameters
     app.addSubCommand("matrix", "Process a two-dimensional matrix",
