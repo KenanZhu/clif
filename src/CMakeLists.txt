@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 3.12)
+project(CLIFProject LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(OUTPUT_DIR "${CMAKE_SOURCE_DIR}/../build/cmake/bin/CLIF_example")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIR})
+
+add_subdirectory(CLIF)
+add_subdirectory(example)

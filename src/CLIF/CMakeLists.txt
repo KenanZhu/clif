@@ -1,0 +1,14 @@
+add_library(CLIF STATIC
+    CLIF.cpp
+    CLIF.hpp
+)
+target_include_directories(CLIF PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+)
+
+install(TARGETS CLIF
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
+    RUNTIME DESTINATION bin
+)
+install(FILES CLIF.hpp DESTINATION include/CLIF)

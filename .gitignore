@@ -1,0 +1,11 @@
+**/.stfolder
+**/.vscode
+build/cmake/**/
+build/cmake/**/*.*
+build/**/.vs
+build/**/*.user
+build/**/*.suo
+build/**/x64/
+build/**/Debug/
+build/**/Release/
+**/.stignore
