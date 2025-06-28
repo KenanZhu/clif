@@ -555,7 +555,7 @@ convert(const std::string &str, const std::type_index &type)
 void CLIF::FStrcov::
 registerBasicConverter(void)
 {
-    /// int converter.
+    /// 'int' converter.
     _converter_map
     [std::type_index(typeid(int))] = [](const std::string &s)
     {
@@ -572,7 +572,7 @@ registerBasicConverter(void)
         return std::any(value);
     };
 
-    /// float converter.
+    /// 'float' converter.
     _converter_map
     [std::type_index(typeid(float))] = [](const std::string &s)
     {
@@ -589,7 +589,7 @@ registerBasicConverter(void)
         return std::any(value);
     };
 
-    /// double converter.
+    /// 'double' converter.
     _converter_map
     [std::type_index(typeid(double))] = [](const std::string &s)
     {
@@ -606,7 +606,7 @@ registerBasicConverter(void)
         return std::any(value);
     };
 
-    /// bool converter.
+    /// 'bool' converter.
     _converter_map
     [std::type_index(typeid(bool))] = [](const std::string &s)
     {
@@ -624,7 +624,7 @@ registerBasicConverter(void)
         return std::any(value);
     };
 
-    /// char converter.
+    /// 'char' converter.
     _converter_map
     [std::type_index(typeid(char))] = [](const std::string &s)
     {
@@ -638,14 +638,14 @@ registerBasicConverter(void)
         return std::any(s[0]);
     };
 
-    /// const char* converter.
+    /// 'const char*' converter.
     _converter_map
     [std::type_index(typeid(const char*))] = [](const std::string &s)
     {
         return std::any(s.data());
     };
 
-    /// string converter.
+    /// 'string' converter.
     _converter_map
     [std::type_index(typeid(std::string))] = [](const std::string &s)
     {
@@ -658,7 +658,7 @@ registerBasicConverter(void)
 void CLIF::FStrcov::
 registerBasicContainer(void)
 {
-    /// vector<...> converter.
+    /// 'vector<...>' converter.
     this->registerContainer<std::vector<int>>();
     this->registerContainer<std::vector<float>>();
     this->registerContainer<std::vector<double>>();
@@ -667,7 +667,7 @@ registerBasicContainer(void)
     this->registerContainer<std::vector<const char*>>();
     this->registerContainer<std::vector<std::string>>();
 
-    /// deque<...> converter.
+    /// 'deque<...>' converter.
     this->registerContainer<std::deque<int>>();
     this->registerContainer<std::deque<float>>();
     this->registerContainer<std::deque<double>>();
@@ -676,7 +676,7 @@ registerBasicContainer(void)
     this->registerContainer<std::deque<const char*>>();
     this->registerContainer<std::deque<std::string>>();
 
-    /// list<...> converter.
+    /// 'list<...>' converter.
     this->registerContainer<std::list<int>>();
     this->registerContainer<std::list<float>>();
     this->registerContainer<std::list<double>>();
@@ -685,7 +685,7 @@ registerBasicContainer(void)
     this->registerContainer<std::list<const char*>>();
     this->registerContainer<std::list<std::string>>();
 
-    /// set<...> converter.
+    /// 'set<...>' converter.
     this->registerContainer<std::set<int>>();
     this->registerContainer<std::set<float>>();
     this->registerContainer<std::set<double>>();
@@ -1338,8 +1338,8 @@ parseAllOptions(void)
                 This consider the none options or optional arguments
                 in subcommand.
 
-                We accept the empty command line, and return true.
-                This will directly use the default value of options.
+                We accept the empty command line, and return true,
+                this will directly use the default value of options.
              */
             valid = true;
         }
