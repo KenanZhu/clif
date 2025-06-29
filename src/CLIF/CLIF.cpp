@@ -52,7 +52,7 @@ toLower(const std::string& str)
 {
     std::string res;
 
-    for (char c:str) res+=std::tolower(c);
+    for (char c : str) res += std::tolower(c);
 
     return res;
 }
@@ -62,7 +62,7 @@ toUpper(const std::string &str)
 {
     std::string res;
 
-    for (char c:str) res+=std::toupper(c);
+    for (char c : str) res += std::toupper(c);
 
     return res;
 }
@@ -72,7 +72,7 @@ onlyAlpha(const std::string &str)
 {
     std::string res;
 
-    for (char c:str) if (std::isalpha(c)) res+=c;
+    for (char c : str) if (std::isalpha(c)) res += c;
 
     return res;
 }
@@ -82,7 +82,7 @@ onlyAlNum(const std::string &str)
 {
     std::string res;
 
-    for (char c:str) if (std::isalnum(c)) res+=c;
+    for (char c : str) if (std::isalnum(c)) res += c;
 
     return res;
 }
@@ -721,24 +721,45 @@ FOption(const std::string &long_name,
     }
 }
 
+/**
+    \note :
+    This function will filter the given long name, and only keep the
+    alphanumeric characters, '-', and '_'.
+ */
 CLIF::FOption &CLIF::FOption::
 longName(const std::string &long_name)
 {
-    if (long_name.find("--") == 0) {
-        _long_name = long_name;
-    } else {
-        _long_name = "--" + long_name;
+    std::string t_name;
+
+    for (char c : long_name) {
+        if (std::isalnum(c) || c == '-' || c == '_') {
+            t_name += c;
+        }
+    }
+
+    if (CLIF::FStr::onlyAlNum(t_name).size() >= 1) {
+        if (t_name.find("--") == 0) {
+            _long_name = t_name;
+        } else {
+            _long_name = "--" + t_name;
+        }
     }
     return *this;
 }
 
+/**
+   \note :
+   This function will find the first valid character, and then add "-"
+   to the front.
+
+   If can not find the valid character, this function will do nothing.
+ */
 CLIF::FOption &CLIF::FOption::
 shortName(const std::string &short_name)
 {
-    if (short_name.find("-") == 0) {
-        _short_name = short_name;
-    } else {
-        _short_name = "-" + short_name;
+    auto it = CLIF::FStr::onlyAlNum(short_name);
+    if (it.size() >= 1) {
+        _short_name = "-" + std::string(1, it[0]);
     }
     return *this;
 }
