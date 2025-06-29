@@ -950,10 +950,9 @@ tryToNormOptionSyntax(void)
     std::vector<std::string> t_rest_cmdline;
 
     for (auto &section : _unparsed_cmdline) {
-        i = section.find('=');
-        if (i != std::string::npos) {
-            t_rest_cmdline.push_back(section.substr(0, i));
-            t_rest_cmdline.push_back(section.substr(i + 1));
+        if (section.find('=') != std::string::npos) {
+            auto it = CLIF::FStr::splitBy(section, '=');
+            t_rest_cmdline.insert(t_rest_cmdline.end(), it.begin(), it.end());
         } else {
             t_rest_cmdline.push_back(section);
         }
