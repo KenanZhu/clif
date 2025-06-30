@@ -161,6 +161,10 @@ public:
     splitKeyValue(const std::string &str, const std::string &delimiter);
 
     static std::vector<std::vector<std::string>>
+    splitIf(const std::vector<std::string> &vec,
+            const std::function<bool(const std::string &)> &condition);
+
+    static std::vector<std::vector<std::string>>
     splitIfExist(const std::vector<std::string> &vec,
                  const std::set<std::string> &check_set);
     static std::vector<std::vector<std::string>>
@@ -643,11 +647,13 @@ private:
     void generateSubCommandHelp(void);
     void generateGlobalHelp(const std::map<std::string, CLIF::Wrapper> &func_linkers);
 
-    /// Preprocess the input command line.
-    void tryToNormOptionSyntax(void);
-    void tryToAutoMatchOptions(void);
+    /// Normalize the processed command option groups.
+    void normalizeOptionGroupEquals(std::vector<std::string> &option_group);
+    void normlizeShortOptionGroups(void);
+    void normalizeOptionGroups(void);
 
     /// Validate the options.
+    bool validateUnknownOptions(void);
     bool validateMissingRequired(void);
     bool validateDuplicateUnique(void);
     bool validateArgumentsAmount(void);
