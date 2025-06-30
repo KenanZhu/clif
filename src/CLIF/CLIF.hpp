@@ -138,7 +138,8 @@ public:
     static std::string toUpper(const std::string &str);
     static std::string onlyAlpha(const std::string &str);
     static std::string onlyAlNum(const std::string &str);
-    static std::string join(const std::vector<std::string> &strs, const char *sign);
+    static std::string join(const std::vector<std::string> &strs,
+                            const char *sign);
 
     static std::vector<std::string>
     splitBy(const std::string &str, const char &delimiter);
@@ -146,9 +147,13 @@ public:
     splitBy(const std::string &str, const std::string &delimiter);
 
     static std::vector<std::string>
-    splitByBrackets(const std::string &str, const char &delimiter,bool strip = true);
+    splitByBrackets(const std::string &str,
+                    const char &delimiter,
+                    bool strip = true);
     static std::vector<std::string>
-    splitByBrackets(const std::string &str, const std::string &delimiter, bool strip = true);
+    splitByBrackets(const std::string &str,
+                    const std::string &delimiter,
+                    bool strip = true);
 
     static std::pair<std::string, std::string>
     splitKeyValue(const std::string &str, const char &delimiter);
@@ -156,14 +161,20 @@ public:
     splitKeyValue(const std::string &str, const std::string &delimiter);
 
     static std::vector<std::vector<std::string>>
-    splitIfExist(const std::vector<std::string> &vec, const std::set<std::string> &check_set);
+    splitIfExist(const std::vector<std::string> &vec,
+                 const std::set<std::string> &check_set);
     static std::vector<std::vector<std::string>>
-    splitIfExist(const std::vector<std::string> &vec, const std::unordered_set<std::string> &check_set);
+    splitIfExist(const std::vector<std::string> &vec,
+                 const std::unordered_set<std::string> &check_set);
     static std::vector<std::vector<std::string>>
-    splitIfExist(const std::vector<std::string> &vec, const std::vector<std::string> &check_vec);
+    splitIfExist(const std::vector<std::string> &vec,
+                 const std::vector<std::string> &check_vec);
 
     static std::string
-    formatByCols(const std::string &str1, const std::string &str2, const int columnL, const int columnR);
+    formatByCols(const std::string &str1,
+                 const std::string &str2,
+                 const int columnL,
+                 const int columnR);
 };
 
 

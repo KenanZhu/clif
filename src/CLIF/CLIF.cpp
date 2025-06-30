@@ -307,7 +307,8 @@ splitIfExist(const std::vector<std::string> &vec,
 std::string CLIF::FStr::
 formatByCols(const std::string &strL,
              const std::string &strR,
-             const int widthL, const int widthR)
+             const int widthL,
+             const int widthR)
 {
     size_t target, last, next;
     std::string temp_strL, temp_strR, res;
