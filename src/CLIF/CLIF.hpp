@@ -23,7 +23,7 @@
     \file    : CLIF.hpp
     \brief   : Header file of CLIF, including all declaration of CLIF classes,
                data types and functions.
-    \version : 1.0.0
+    \version : 1.1.0
  */
 
 #pragma once
@@ -59,7 +59,7 @@
 #endif
 
 /////////////////// _DEFINES_
-#define CLIF_VERSION                   "1.0.0"
+#define CLIF_VERSION                   "1.1.0"
 
 #define SPACE                          std::string(" ")
 
