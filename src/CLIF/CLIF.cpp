@@ -978,7 +978,6 @@ generateGlobalHelp(const std::map<std::string, CLIF::Wrapper> &func_linkers)
 void CLIF::FParser::
 normalizeOptionGroupEquals(std::vector<std::string> &option_group)
 {
-    size_t i;
     std::vector<std::string> t_group;
 
     for (auto &section : option_group) {
@@ -1010,7 +1009,7 @@ normalizeOptionGroupEquals(std::vector<std::string> &option_group)
     as {"-o", "file"}.
  */
 void CLIF::FParser::
-normlizeShortOptionGroups(void)
+normalizeShortOptionGroups(void)
 {
     bool has_param;
     size_t i, j, opt_num, arg_num;
@@ -1063,7 +1062,7 @@ normalizeOptionGroups(void)
         if (group[0] == "--") break;
         this->normalizeOptionGroupEquals(group);
     }
-    this->normlizeShortOptionGroups();
+    this->normalizeShortOptionGroups();
 }
 
 bool CLIF::FParser::

@@ -649,7 +649,7 @@ private:
 
     /// Normalize the processed command option groups.
     void normalizeOptionGroupEquals(std::vector<std::string> &option_group);
-    void normlizeShortOptionGroups(void);
+    void normalizeShortOptionGroups(void);
     void normalizeOptionGroups(void);
 
     /// Validate the options.
