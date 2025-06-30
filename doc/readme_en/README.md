@@ -5,16 +5,16 @@ English | [简体中文](../../README.md)
 ---
 ## Why Choose CLIF?
 
-✅ **Single File Dependency**
+✅ **Single File Dependency** \
  : Requires only the C++17 standard library with no external dependencies
 
-✅ **Functional Programming**
+✅ **Functional Programming** \
  : Direct function binding eliminates manual argument parsing
 
-✅ **Strong Type Safety**
+✅ **Strong Type Safety** \
  : Catches type conflicts during compilation to prevent runtime errors
 
-✅ **Generic Container Support**
+✅ **Generic Container Support** \
  : Native support for nested containers with custom parsers and validators
 
 CLIF leverages C++17 features like **type inference** and **functional programming** to provide robust type safety and generic container support for command-line applications.
@@ -28,7 +28,7 @@ The [example directory](../../src/example/) contains a complete CLIF implementat
 Build using either method:
 
 <details>
-<summary>Using VS2022:</summary>
+<summary>Using VS2022: </summary>
 
 1. Open VS2022 and load the solution file: [CLIF_Example.sln](../../build/vs/CLIF_Example/CLIF_Example.sln) in the [VS solution directory](../../build/vs/)
 2. Build the solution
@@ -36,7 +36,7 @@ Build using either method:
 </details>
 
 <details>
-<summary>CMake build for Cross-platform:</summary>
+<summary>CMake build for Cross-platform: </summary>
 
 1. Install CMake (3.10+) on Windows or Linux
 2. In terminal at [CMAKE build directory](../../build/cmake/):
@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
     CLIF::FApplication app("Scientific Computing Tool");
 
     /// Register container type
-    app.addNewContainerConverter<vector<vector<int>>>();
+    app.registerContainerConverter<vector<vector<int>>>();
 
     /// Bind subcommand with validated parameters
     app.addSubCommand("matrix", "Process a two-dimensional matrix",

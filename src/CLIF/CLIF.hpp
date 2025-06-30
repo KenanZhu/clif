@@ -23,7 +23,7 @@
     \file    : CLIF.hpp
     \brief   : Header file of CLIF, including all declaration of CLIF classes,
                data types and functions.
-    \version : 1.0.0
+    \version : 1.1.0
  */
 
 #pragma once
@@ -59,7 +59,7 @@
 #endif
 
 /////////////////// _DEFINES_
-#define CLIF_VERSION                   "1.0.0"
+#define CLIF_VERSION                   "1.1.0"
 
 #define SPACE                          std::string(" ")
 
@@ -82,23 +82,23 @@ namespace CLIF {
     ///////////////////////////////////////////////////////////////////////////
     ///// CLIF::OptType
     enum OptType {
-        PT_OPTIONAL = 0x00, ///< optional option type.
-        PT_REQUIRED = 0x01, ///< required option type.
-        PT_UNIQUEED = 0x02, ///< unique option type.
+        PT_OPTIONAL = 0x00, ///< Optional option type.
+        PT_REQUIRED = 0x01, ///< Required option type.
+        PT_UNIQUEED = 0x02, ///< Unique option type.
     };
 
     ///////////////////////////////////////////////////////////////////////////
     ///// CLIF::Color
     enum Color {
-        BLACK   = 0, ///< black color.
-        RED     = 1, ///< red color.
-        GREEN   = 2, ///< green color.
-        YELLOW  = 3, ///< yellow color.
-        BLUE    = 4, ///< blue color.
-        MAGENTA = 5, ///< magenta color.
-        CYAN    = 6, ///< cyan color.
-        WHITE   = 7, ///< white color.
-        DEFAULT = 9  ///< default color.
+        BLACK   = 0, ///< Black color.
+        RED     = 1, ///< Red color.
+        GREEN   = 2, ///< Green color.
+        YELLOW  = 3, ///< Yellow color.
+        BLUE    = 4, ///< Blue color.
+        MAGENTA = 5, ///< Magenta color.
+        CYAN    = 6, ///< Cyan color.
+        WHITE   = 7, ///< White color.
+        DEFAULT = 9  ///< Default color.
     };
     struct Wrapper;
 
@@ -117,11 +117,11 @@ namespace CLIF {
 ///////////////////////////////////////////////////////////////////////////////
 ///// CLIF::Wrapper
 struct CLIF::Wrapper {
-    std::string subcommand;       ///< subcommand name.
-    std::string description;      ///< subcommand description.
-    std::vector<FOption> options; ///< subcommand options.
+    std::string subcommand;       ///< Subcommand name.
+    std::string description;      ///< Subcommand description.
+    std::vector<FOption> options; ///< Subcommand options.
 
-    ///v subcommand trigger function.
+    ///v Subcommand trigger function.
     std::function<void(const std::vector<CLIF::FOption> &)> trigger_func;
 };
 
@@ -138,7 +138,8 @@ public:
     static std::string toUpper(const std::string &str);
     static std::string onlyAlpha(const std::string &str);
     static std::string onlyAlNum(const std::string &str);
-    static std::string join(const std::vector<std::string> &strs, const char *sign);
+    static std::string join(const std::vector<std::string> &strs,
+                            const char *sign);
 
     static std::vector<std::string>
     splitBy(const std::string &str, const char &delimiter);
@@ -146,9 +147,13 @@ public:
     splitBy(const std::string &str, const std::string &delimiter);
 
     static std::vector<std::string>
-    splitByBrackets(const std::string &str, const char &delimiter,bool strip = true);
+    splitByBrackets(const std::string &str,
+                    const char &delimiter,
+                    bool strip = true);
     static std::vector<std::string>
-    splitByBrackets(const std::string &str, const std::string &delimiter, bool strip = true);
+    splitByBrackets(const std::string &str,
+                    const std::string &delimiter,
+                    bool strip = true);
 
     static std::pair<std::string, std::string>
     splitKeyValue(const std::string &str, const char &delimiter);
@@ -156,14 +161,24 @@ public:
     splitKeyValue(const std::string &str, const std::string &delimiter);
 
     static std::vector<std::vector<std::string>>
-    splitIfExist(const std::vector<std::string> &vec, const std::set<std::string> &check_set);
+    splitIf(const std::vector<std::string> &vec,
+            const std::function<bool(const std::string &)> &condition);
+
     static std::vector<std::vector<std::string>>
-    splitIfExist(const std::vector<std::string> &vec, const std::unordered_set<std::string> &check_set);
+    splitIfExist(const std::vector<std::string> &vec,
+                 const std::set<std::string> &check_set);
     static std::vector<std::vector<std::string>>
-    splitIfExist(const std::vector<std::string> &vec, const std::vector<std::string> &check_vec);
+    splitIfExist(const std::vector<std::string> &vec,
+                 const std::unordered_set<std::string> &check_set);
+    static std::vector<std::vector<std::string>>
+    splitIfExist(const std::vector<std::string> &vec,
+                 const std::vector<std::string> &check_vec);
 
     static std::string
-    formatByCols(const std::string &str1, const std::string &str2, const int columnL, const int columnR);
+    formatByCols(const std::string &str1,
+                 const std::string &str2,
+                 const int columnL,
+                 const int columnR);
 };
 
 
@@ -185,10 +200,10 @@ public:
 
     static void log(const std::string &msg, const int level);
 private:
-    static int  _log_level;            ///< log level.
-    static bool _is_log_file_ready;    ///< log file ready flag.
-    static std::string _log_file_path; ///< log file path.
-    static std::fstream _log_file;     ///< log file stream.
+    static int  _log_level;            ///< Log level.
+    static bool _is_log_file_ready;    ///< Log file ready flag.
+    static std::string _log_file_path; ///< Log file path.
+    static std::fstream _log_file;     ///< Log file stream.
 protected:
     static void parseDefaultPath(const char *argv);
     static void parsePath(int *argc, char *argv[], int &i);
@@ -260,7 +275,7 @@ public:
     {
         if (_converter_map.count(typeid(T))) {
             CLIF::FLog::
-            warnAt("CLIF::FStrcov::registerType",
+            warnAt("CLIF::FStrcov::registerNewBasic",
                 "Basic type converter '"
                 + std::string(typeid(T).name())
                 + "' is already registered.");
@@ -269,7 +284,7 @@ public:
         }
         _converter_map[std::type_index(typeid(T))] = func;
         CLIF::FLog::
-        infoAt("CLIF::FStrcov::registerType",
+        infoAt("CLIF::FStrcov::registerNewBasic",
             "New basic type converter '"
             + std::string(typeid(T).name())
             + "' successfully registered.");
@@ -516,10 +531,9 @@ public:
         } else if (_default_value.has_value() || _current_value.has_value()) {
             /**
                 If already exist value in default or current, this means the
-                data type is already decided
+                data type is already decided by the given value.
 
-                by the given value. So CLIF::FOption will not change data
-                type again.
+                So CLIF::FOption will not change data type again.
              */
         } else {
             _data_type = new_type;
@@ -577,16 +591,16 @@ public:
     inline std::any getDefaultValue(void) const
     { return _default_value; }
 private:
-    unsigned _option_type; ///< option type.
+    unsigned _option_type; ///< Option type.
 
-    std::type_index _data_type; ///< option data type.
-    std::string _long_name;     ///< option long name.
-    std::string _short_name;    ///< option short name.
-    std::string _help;          ///< option help.
-    std::any _default_value;    ///< option default value.
-    std::any _current_value;    ///< option current value.
+    std::type_index _data_type; ///< Option data type.
+    std::string _long_name;     ///< Option long name.
+    std::string _short_name;    ///< Option short name.
+    std::string _help;          ///< Option help.
+    std::any _default_value;    ///< Option default value.
+    std::any _current_value;    ///< Option current value.
 
-    std::function<bool(const std::any &)> _validator; ///< validator function.
+    std::function<bool(const std::any &)> _validator; ///< Validator function.
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -633,11 +647,13 @@ private:
     void generateSubCommandHelp(void);
     void generateGlobalHelp(const std::map<std::string, CLIF::Wrapper> &func_linkers);
 
-    /// Preprocess the input command line.
-    void tryToNormOptionSyntax(void);
-    void tryToAutoMatchOptions(void);
+    /// Normalize the processed command option groups.
+    void normalizeOptionGroupEquals(std::vector<std::string> &option_group);
+    void normalizeShortOptionGroups(void);
+    void normalizeOptionGroups(void);
 
     /// Validate the options.
+    bool validateUnknownOptions(void);
     bool validateMissingRequired(void);
     bool validateDuplicateUnique(void);
     bool validateArgumentsAmount(void);

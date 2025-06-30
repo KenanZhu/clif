@@ -22,7 +22,7 @@
 /**
     \file    : CLIF.cpp
     \brief   : Implementation of CLIF.
-    \version : 1.0.0
+    \version : 1.1.0
  */
 
 #include "CLIF.hpp"
@@ -52,7 +52,7 @@ toLower(const std::string& str)
 {
     std::string res;
 
-    for (char c:str) res+=std::tolower(c);
+    for (char c : str) res += std::tolower(c);
 
     return res;
 }
@@ -62,7 +62,7 @@ toUpper(const std::string &str)
 {
     std::string res;
 
-    for (char c:str) res+=std::toupper(c);
+    for (char c : str) res += std::toupper(c);
 
     return res;
 }
@@ -72,7 +72,7 @@ onlyAlpha(const std::string &str)
 {
     std::string res;
 
-    for (char c:str) if (std::isalpha(c)) res+=c;
+    for (char c : str) if (std::isalpha(c)) res += c;
 
     return res;
 }
@@ -82,7 +82,7 @@ onlyAlNum(const std::string &str)
 {
     std::string res;
 
-    for (char c:str) if (std::isalnum(c)) res+=c;
+    for (char c : str) if (std::isalnum(c)) res += c;
 
     return res;
 }
@@ -258,19 +258,17 @@ splitKeyValue(const std::string &str, const std::string &delimiter)
 }
 
 std::vector<std::vector<std::string>> CLIF::FStr::
-splitIfExist(const std::vector<std::string> &vec,
-             const std::set<std::string> &check_set)
+splitIf(const std::vector<std::string> &vec,
+        const std::function<bool(const std::string &)> &condition)
 {
-    bool active_group;
+    bool active_group = false;
     std::vector<std::string> current_group;
     std::vector<std::vector<std::string>> split_groups;
 
-    active_group = false;
-
     for (const auto &s : vec) {
-        if (check_set.count(s)) {
+        if (condition(s)) {
             if (active_group) {
-                split_groups.push_back(current_group);
+                split_groups.push_back(std::move(current_group));
                 current_group.clear();
             }
             current_group.push_back(s);
@@ -279,9 +277,21 @@ splitIfExist(const std::vector<std::string> &vec,
             current_group.push_back(s);
         }
     }
-    if (active_group) split_groups.push_back(current_group);
-
+    if (active_group) {
+        split_groups.push_back(std::move(current_group));
+    }
     return split_groups;
+}
+
+std::vector<std::vector<std::string>> CLIF::FStr::
+splitIfExist(const std::vector<std::string> &vec,
+             const std::set<std::string> &check_set)
+{
+    return CLIF::FStr::splitIf(vec,
+    [&check_set](const std::string &s)
+    {
+        return check_set.count(s);
+    });
 }
 
 std::vector<std::vector<std::string>> CLIF::FStr::
@@ -307,7 +317,8 @@ splitIfExist(const std::vector<std::string> &vec,
 std::string CLIF::FStr::
 formatByCols(const std::string &strL,
              const std::string &strR,
-             const int widthL, const int widthR)
+             const int widthL,
+             const int widthR)
 {
     size_t target, last, next;
     std::string temp_strL, temp_strR, res;
@@ -555,7 +566,7 @@ convert(const std::string &str, const std::type_index &type)
 void CLIF::FStrcov::
 registerBasicConverter(void)
 {
-    /// int converter.
+    /// 'int' converter.
     _converter_map
     [std::type_index(typeid(int))] = [](const std::string &s)
     {
@@ -572,7 +583,7 @@ registerBasicConverter(void)
         return std::any(value);
     };
 
-    /// float converter.
+    /// 'float' converter.
     _converter_map
     [std::type_index(typeid(float))] = [](const std::string &s)
     {
@@ -589,7 +600,7 @@ registerBasicConverter(void)
         return std::any(value);
     };
 
-    /// double converter.
+    /// 'double' converter.
     _converter_map
     [std::type_index(typeid(double))] = [](const std::string &s)
     {
@@ -606,7 +617,7 @@ registerBasicConverter(void)
         return std::any(value);
     };
 
-    /// bool converter.
+    /// 'bool' converter.
     _converter_map
     [std::type_index(typeid(bool))] = [](const std::string &s)
     {
@@ -624,7 +635,7 @@ registerBasicConverter(void)
         return std::any(value);
     };
 
-    /// char converter.
+    /// 'char' converter.
     _converter_map
     [std::type_index(typeid(char))] = [](const std::string &s)
     {
@@ -638,14 +649,14 @@ registerBasicConverter(void)
         return std::any(s[0]);
     };
 
-    /// const char* converter.
+    /// 'const char*' converter.
     _converter_map
     [std::type_index(typeid(const char*))] = [](const std::string &s)
     {
         return std::any(s.data());
     };
 
-    /// string converter.
+    /// 'string' converter.
     _converter_map
     [std::type_index(typeid(std::string))] = [](const std::string &s)
     {
@@ -658,7 +669,7 @@ registerBasicConverter(void)
 void CLIF::FStrcov::
 registerBasicContainer(void)
 {
-    /// vector<...> converter.
+    /// 'vector<...>' converter.
     this->registerContainer<std::vector<int>>();
     this->registerContainer<std::vector<float>>();
     this->registerContainer<std::vector<double>>();
@@ -667,7 +678,7 @@ registerBasicContainer(void)
     this->registerContainer<std::vector<const char*>>();
     this->registerContainer<std::vector<std::string>>();
 
-    /// deque<...> converter.
+    /// 'deque<...>' converter.
     this->registerContainer<std::deque<int>>();
     this->registerContainer<std::deque<float>>();
     this->registerContainer<std::deque<double>>();
@@ -676,7 +687,7 @@ registerBasicContainer(void)
     this->registerContainer<std::deque<const char*>>();
     this->registerContainer<std::deque<std::string>>();
 
-    /// list<...> converter.
+    /// 'list<...>' converter.
     this->registerContainer<std::list<int>>();
     this->registerContainer<std::list<float>>();
     this->registerContainer<std::list<double>>();
@@ -685,7 +696,7 @@ registerBasicContainer(void)
     this->registerContainer<std::list<const char*>>();
     this->registerContainer<std::list<std::string>>();
 
-    /// set<...> converter.
+    /// 'set<...>' converter.
     this->registerContainer<std::set<int>>();
     this->registerContainer<std::set<float>>();
     this->registerContainer<std::set<double>>();
@@ -721,24 +732,45 @@ FOption(const std::string &long_name,
     }
 }
 
+/**
+    \note :
+    This function will filter the given long name, and only keep the
+    alphanumeric characters, '-', and '_'.
+ */
 CLIF::FOption &CLIF::FOption::
 longName(const std::string &long_name)
 {
-    if (long_name.find("--") == 0) {
-        _long_name = long_name;
-    } else {
-        _long_name = "--" + long_name;
+    std::string t_name;
+
+    for (char c : long_name) {
+        if (std::isalnum(c) || c == '-' || c == '_') {
+            t_name += c;
+        }
+    }
+
+    if (CLIF::FStr::onlyAlNum(t_name).size() >= 1) {
+        if (t_name.find("--") == 0) {
+            _long_name = t_name;
+        } else {
+            _long_name = "--" + t_name;
+        }
     }
     return *this;
 }
 
+/**
+   \note :
+   This function will find the first valid character, and then add "-"
+   to the front.
+
+   If can not find the valid character, this function will do nothing.
+ */
 CLIF::FOption &CLIF::FOption::
 shortName(const std::string &short_name)
 {
-    if (short_name.find("-") == 0) {
-        _short_name = short_name;
-    } else {
-        _short_name = "-" + short_name;
+    auto it = CLIF::FStr::onlyAlNum(short_name);
+    if (it.size() >= 1) {
+        _short_name = "-" + std::string(1, it[0]);
     }
     return *this;
 }
@@ -944,58 +976,112 @@ generateGlobalHelp(const std::map<std::string, CLIF::Wrapper> &func_linkers)
 }
 
 void CLIF::FParser::
-tryToNormOptionSyntax(void)
+normalizeOptionGroupEquals(std::vector<std::string> &option_group)
 {
-    size_t i;
-    std::vector<std::string> t_rest_cmdline;
+    std::vector<std::string> t_group;
 
-    for (auto &section : _unparsed_cmdline) {
-        i = section.find('=');
-        if (i != std::string::npos) {
-            t_rest_cmdline.push_back(section.substr(0, i));
-            t_rest_cmdline.push_back(section.substr(i + 1));
+    for (auto &section : option_group) {
+        if (section.find('=') != std::string::npos) {
+            auto it = CLIF::FStr::splitBy(section, '=');
+            t_group.insert(t_group.end(), it.begin(), it.end());
         } else {
-            t_rest_cmdline.push_back(section);
+            t_group.push_back(section);
         }
     }
-    _unparsed_cmdline = std::move(t_rest_cmdline);
+    option_group = std::move(t_group);
+}
+
+/**
+    \note :
+    This function will normalize short option groups.
+
+    We regard the first section of each option group as the option name,
+    and the rest sections as the arguments of the option. Each short option
+    character will sequentially take one argument until all arguments
+    are exhausted. Any remaining short options will then be treated as
+    options without arguments. Conversely, if arguments still remain,
+    all of them will be appended to the last option.
+
+    For example short option groups like {"-X", "arg"} or {"-XY", "arg"},
+    they will be normalized to {"-X", "arg"} and {"-X", "arg"} ,{"-Y"}.
+
+    For this reason, general GNU/POSIX short option "-ofile" will not regard
+    as {"-o", "file"}.
+ */
+void CLIF::FParser::
+normalizeShortOptionGroups(void)
+{
+    bool has_param;
+    size_t i, j, opt_num, arg_num;
+    std::string opt_chars;
+    std::vector<std::string> new_group, rest_args;
+    std::vector<std::vector<std::string>> new_groups;
+
+    has_param = false;
+
+    for (auto &group : _parsed_options_groups) {
+        if (group.empty()) continue;
+        if (group[0].find("--") == 0) {
+            new_groups.push_back(group);
+            continue;
+        }
+        /// We already know each begin of group all is start with '-'.
+        if (group[0].size() <= 2) {
+            new_groups.push_back(group);
+            continue;
+        }
+
+        opt_chars = group[0].substr(1);
+        opt_num = opt_chars.size();
+        arg_num = group.size() - 1;
+
+        for (i = 0; i < opt_num; ++i) {
+            new_group.clear();
+            new_group.push_back(std::string("-") + opt_chars[i]);
+            if (i < opt_num - 1) {
+                if (i < arg_num) {
+                    new_group.push_back(group[1 + i]);
+                }
+            }
+            else if (arg_num > i) {
+                for (j = 1 + i; j < group.size(); ++j) {
+                    new_group.push_back(group[j]);
+                }
+            }
+            new_groups.push_back(new_group);
+        }
+    }
+    _parsed_options_groups = std::move(new_groups);
 }
 
 void CLIF::FParser::
-tryToAutoMatchOptions(void)
+normalizeOptionGroups(void)
 {
-    /**
-        Only all options only own one argument, this will
-        regard each input is sort by given options vector.
-
-        But, we have plan to support positional arguments in the future.
-     */
-    size_t i, idx, opts_amount;
-    std::vector<std::string> auto_matched, long_opts_name;
-
-    i = 0;
-    opts_amount = 0;
-
-    for (const auto &option : _active_wrapper.options) {
-        if (option.getNumOfArgs() != 1) return;
-
-        opts_amount += option.getNumOfArgs();
-        long_opts_name.push_back(option.getLongName());
+    for (auto &group : _parsed_options_groups) {
+        if (group.empty()) continue;
+        if (group[0] == "--") break;
+        this->normalizeOptionGroupEquals(group);
     }
+    this->normalizeShortOptionGroups();
+}
 
-    for (const auto &section : _unparsed_cmdline) {
-        if (!_active_options.count(section)) i++;
-    }
+bool CLIF::FParser::
+validateUnknownOptions(void)
+{
+    bool valid;
 
-    if (i == opts_amount && _unparsed_cmdline.size() == opts_amount) {
-        auto_matched.reserve(long_opts_name.size() + _unparsed_cmdline.size());
+    valid = true;
 
-        for (idx = 0; idx < long_opts_name.size(); ++idx) {
-            auto_matched.push_back(long_opts_name[idx]);
-            auto_matched.push_back(_unparsed_cmdline[idx]);
+    for (const auto &group : _parsed_options_groups) {
+        if (_active_options.count(group[0]) == 0) {
+            CLIF::FStdo::
+            runMsg("got unknown [options] '"
+                + group[0]
+                + "'.", 2);
+            valid = false;
         }
-        _unparsed_cmdline = std::move(auto_matched);
     }
+    return valid;
 }
 
 bool CLIF::FParser::
@@ -1138,13 +1224,18 @@ validateOptionsSyntax(void)
         _active_options.insert(option.getLongName());
         _active_options.insert(option.getShortName());
     }
-    this->tryToNormOptionSyntax();
-    this->tryToAutoMatchOptions();
 
-    _parsed_options_groups = CLIF::FStr::
-                      splitIfExist(_unparsed_cmdline, _active_options);
-
-    if (!this->validateMissingRequired()) {
+    _parsed_options_groups = CLIF::FStr::splitIf(_unparsed_cmdline,
+    [&](const std::string &s)
+    {
+        if (s.size() > 1) {
+            return s[0] == '-';
+        }
+        return false;
+    });
+    this->normalizeOptionGroups();
+    if (!this->validateUnknownOptions()) {
+    } else if (!this->validateMissingRequired()) {
     } else if (!this->validateDuplicateUnique()) {
     } else if (!this->validateArgumentsAmount()) {
     } else {
@@ -1338,8 +1429,8 @@ parseAllOptions(void)
                 This consider the none options or optional arguments
                 in subcommand.
 
-                We accept the empty command line, and return true.
-                This will directly use the default value of options.
+                We accept the empty command line, and return true,
+                this will directly use the default value of options.
              */
             valid = true;
         }

@@ -6,13 +6,13 @@
 ## 为什么选择CLIF？
 
 ✅ **单文件依赖** \
- : 仅依赖C++17标准库, 无需任何外部依赖
+ ：仅依赖C++17标准库, 无需任何外部依赖
 
 ✅ **函数式编程** \
- : 命令直接绑定到函数，避免手动解析参数
+ ：命令直接绑定到函数，避免手动解析参数
 
 ✅ **强类型安全** \
- : 构建期捕获类型冲突，避免运行时错误
+ ：构建期捕获类型冲突，避免运行时错误
 
 ✅ **泛容器支持** \
  ：原生支持嵌套容器，支持自定义解析器和验证器
@@ -70,7 +70,7 @@ CLIF充分利用了C++17的**类型推断**和**函数式编程**等特性，为
 > [!NOTE]
 > 注意：这里的示例代码是为了便于说明，你可以根据自己的项目结构进行调整。
 
-#### 步骤1: 引入CLIF
+#### 步骤1：引入CLIF
 
 在入口文件中引入CLIF头文件，确保编译器启用C++17或更高标准：
 ```cpp
@@ -78,7 +78,7 @@ CLIF充分利用了C++17的**类型推断**和**函数式编程**等特性，为
 #include <CLIF/CLIF.hpp>
 ```
 
-#### 步骤2: 定义功能函数
+#### 步骤2：定义功能函数
 
 功能函数是用户自定义的、返回值为void的函数集合，它们将被绑定到CLIF中执行。用户可以根据实际需求灵活定义任意参数类型和参数数量。通常，`funcs.hpp`头文件用于集中管理用户实现的功能函数逻辑。
 
@@ -92,7 +92,7 @@ void matrix_op(vector<vector<int>> matrix) {
 }
 ```
 
-#### 步骤3: 构建CLIF接口
+#### 步骤3：构建CLIF接口
 
 CLIF通过命令解析器解析用户输入，根据命令名称和参数匹配功能函数。用户需要在入口源文件中注册命令和功能函数的绑定关系。
 
@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
     CLIF::FApplication app("科学计算工具");
 
     /// 注册容器类型
-    app.addNewContainerConverter<vector<vector<int>>>();
+    app.registerContainerConverter<vector<vector<int>>>();
 
     /// 链接子命令和功能函数及带验证器的命令参数
     app.addSubCommand("matrix", "处理二维矩阵",
@@ -143,10 +143,10 @@ int main(int argc, char *argv[])
 ```bash
 ./app.exe --log-file <log-file-path> --log-level <log-level>
 ```
-• 默认日志文件: `<app-name>.log`
-• 日志级别对应: `1:info`, `2:warn`, `3:error`, `4:fatal`
+• 默认日志文件：`<app-name>.log`
+• 日志级别对应：`1:info`, `2:warn`, `3:error`, `4:fatal`
 
-#### 步骤5: 运行用户命令
+#### 步骤5：运行用户命令
 
 ```bash
 ./app.exe matrix --data "[1,2],[3,4]"
@@ -157,9 +157,9 @@ int main(int argc, char *argv[])
 ## 需要帮助？
 ## 联系我
 
-- **维护**: [KenanZhu (Nanoki)](https://github.com/KenanZhu)
-- **邮箱**: <nanoki_zh@163.com>
-- **讨论**: 提交[Issues](https://github.com/KenanZhu/CLIF/issues)或[PR](https://github.com/KenanZhu/CLIF/pulls)
+- **维护**：[KenanZhu (Nanoki)](https://github.com/KenanZhu)
+- **邮箱**：<nanoki_zh@163.com>
+- **讨论**：提交[Issues](https://github.com/KenanZhu/CLIF/issues)或[PR](https://github.com/KenanZhu/CLIF/pulls)
 ---
 
 _**Free to use** —— CLIF_
