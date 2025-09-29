@@ -7,7 +7,7 @@
     [INTRODUCTION]
 
         This is a functional CLI-Framework based on C/C++, which have features below:
-            a,  ingle File Dependency
+            a.  ingle File Dependency
              :  Requires only the C++17 standard library with no external dependencies.
             b.  Functional Programming
              :  Direct function binding eliminates manual argument parsing.
@@ -35,7 +35,7 @@
                         .longName("first")
                         .help("first option."),
                     CLIF::FOption()
-                        .longName("first")
+                        .longName("second")
                         .help("second option")
                     ...
                 }, func);

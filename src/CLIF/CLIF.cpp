@@ -885,7 +885,7 @@ parse(int argc, char* argv[],
         cmdlines.push_back(std::string(argv[i]));
     }
     CLIF::FLog::
-    infoAt("CLIF::FParser::parse()",
+    infoAt("CLIF::FParser::parse",
         "Receive command to parse : '"
         + CLIF::FStr::join(cmdlines, " ")
         + "'.");
@@ -893,7 +893,7 @@ parse(int argc, char* argv[],
     this->parse(cmdlines, caller, func_linkers);
 
     CLIF::FLog::
-    infoAt("CLIF::FParser::parse()",
+    infoAt("CLIF::FParser::parse",
         "Command '"
         + CLIF::FStr::join(cmdlines, " ")
         + "' parse over.");
@@ -1268,7 +1268,7 @@ parseSubCommand(const std::vector<std::string> &cmdlines,
         this->generateGlobalHelp(func_linkers);
 
         CLIF::FLog::
-        infoAt("CLIF::FParser::parseSubCommand()",
+        infoAt("CLIF::FParser::parseSubCommand",
             "Global help trigger '"
             + first_section
             + "' parsed.");
@@ -1286,7 +1286,7 @@ parseSubCommand(const std::vector<std::string> &cmdlines,
         func_linkers.at(func_linkers.at(_active_subcommand).subcommand);
 
         CLIF::FLog::
-        infoAt("CLIF::FParser::parseSubCommand()",
+        infoAt("CLIF::FParser::parseSubCommand",
             "Subcommand '"
             + first_section
             + "' parsed, target at '"
@@ -1354,7 +1354,7 @@ parseOption(const std::vector<std::string> &option_group)
         }
     }
     CLIF::FLog::
-    infoAt("CLIF::FParser::parseOption()",
+    infoAt("CLIF::FParser::parseOption",
         "Option '"
         + option_name
         + "' parsed with given value '"
@@ -1390,7 +1390,7 @@ parseOptions(const std::vector<std::vector<std::string>> &option_groups)
         valid = true;
     }
     CLIF::FLog::
-    infoAt("CLIF::FParser::parseOptions()",
+    infoAt("CLIF::FParser::parseOptions",
         "All "
         + std::to_string(total)
         + " options parsed, "
@@ -1442,7 +1442,7 @@ parseAllOptions(void)
             runMsg("use '? /h /-h /help /--help' to show help message.");
 
             CLIF::FLog::
-            infoAt("CLIF::FParser::parseAllOptions()",
+            infoAt("CLIF::FParser::parseAllOptions",
                 "No options in subcommand '"
                 + _active_subcommand
                 + "', parsed.");
@@ -1453,7 +1453,7 @@ parseAllOptions(void)
         this->generateSubCommandHelp();
 
         CLIF::FLog::
-        infoAt("CLIF::FParser::parseAllOptions()",
+        infoAt("CLIF::FParser::parseAllOptions",
             "Help trigger '"
             + _unparsed_cmdline[0]
             + "' for subcommand '"
@@ -1525,7 +1525,7 @@ start(int argc, char *argv[])
         return 1;
     }
     CLIF::FLog::
-    infoAt("CLIF::FApplication::start()",
+    infoAt("CLIF::FApplication::start",
         "Application '"
         + _program_name
         + "' start.");
@@ -1559,7 +1559,7 @@ addSubCommand(const std::string &exist_subcommand,
         _func_linkers[exist_subcommand].subcommand;
 
         CLIF::FLog::
-        infoAt("CLIF::FApplication::addSubCommand()",
+        infoAt("CLIF::FApplication::addSubCommand",
             "Add new subcommand '"
             + new_subcommand
             + "' with exist subcommand '"
