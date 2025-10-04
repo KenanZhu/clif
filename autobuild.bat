@@ -60,13 +60,13 @@ echo autobuild : All required tools found. Starting auto build process...
 
 echo autobuild : Generating build system...
 cd /d "%BUILD_DIR%"
-cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug "%SRC_DIR%"
+cmake "%SRC_DIR%"
 if %errorlevel% neq 0 (
     echo autobuild : Error * CMake generation failed !
     pause
     exit /b 1
 )
-cmake --build . --config Debug
+cmake --build .
 if %errorlevel% neq 0 (
     echo autobuild : Error * Build failed !
     pause
